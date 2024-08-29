@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'cd SampleWeb mvn test'
+                sh 'cd Sampleweb mvn test'
             }
         }
         stage('Build') {
             steps {
-                sh 'cd SampleWeb && mvn clean package'
+                sh 'cd Sampleweb && mvn clean package'
             }
         }
         
