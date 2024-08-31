@@ -4,19 +4,30 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'cd SampleWeb mvn test'
+                sh 'cd SampleWebApp && mvn test'
             }
         }
         stage('Build') {
             steps {
-                sh 'cd SampleWeb && mvn clean package'
+                sh 'cd SampleWebApp && mvn clean package'
             }
         }
-        
         stage('Deploy to Tomcat') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcat_ID', path: '', url: 'http://52.204.181.202:8080/')], contextPath: 'webapp', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat9', path: '', url: 'http://54.92.196.230:8080/')], contextPath: 'webapp', war: '**/*.war'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Build failed. Please check the logs.'
         }
     }
 }
